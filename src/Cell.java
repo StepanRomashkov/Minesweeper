@@ -28,7 +28,7 @@ public class Cell {
 	public String getCellState() {
 		switch (cellState) {
 		case -1:
-			return " ☺ ";
+			return " ☻ ";
 		case 0:
 			return "   ";
 		case 1:
