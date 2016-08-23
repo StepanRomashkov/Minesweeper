@@ -64,100 +64,94 @@ public class MineField {
 	
 	private int checkCell(int r, int c) {
 		int count = 0;
-		if (r == 0) {
-			if (c == 0 && r == 0) {
-				if (mineSet[r][c+1].getMine())
-					count++;
-				if (mineSet[r+1][c].getMine())
-					count++;
-				if (mineSet[r+1][c+1].getMine())
-					count++;
-			} else if (c == getCols() && r == 0) {
-				if (mineSet[r][c-1].getMine())
-					count++;
-				if (mineSet[r+1][c-1].getMine())
-					count++;
-				if (mineSet[r+1][c].getMine())
-					count++;
-			} else if (r == 0 && c != getCols() && c != 0)
-				if (mineSet[r][c-1].getMine())
-					count++;
-				if (mineSet[r][c+1].getMine())
-					count++;
-				if (mineSet[r+1][c-1].getMine())
-					count++;
-				if (mineSet[r+1][c].getMine())
-					count++;
-				if (mineSet[r+1][c+1].getMine())
-					count++;
-		} else if (r == getRows()) {
-			if (c == 0 && r == getRows()) {
-				if (mineSet[r-1][c].getMine())
-					count++;
-				if (mineSet[r-1][c+1].getMine())
-					count++;
-				if (mineSet[r][c+1].getMine())
-					count++;				
-			} else if (c == getCols()) {
-				if (mineSet[r-1][c-1].getMine())
-					count++;
-				if (mineSet[r+1][c].getMine())
-					count++;
-				if (mineSet[r][c-1].getMine())
-					count++;
-			} else
-				if (mineSet[r-1][c-1].getMine())
-					count++;
-				if (mineSet[r-1][c].getMine())
-					count++;
-				if (mineSet[r-1][c+1].getMine())
-					count++;
-				if (mineSet[r][c-1].getMine())
-					count++;
-				if (mineSet[r][c+1].getMine())
-					count++;
-		} else if (c == 0) {
-			if (mineSet[r-1][c].getMine())
+		
+		
+		for(int x = 0 ; x<rows; x++){
+			for(int y = 0; y<cols;y++){
+				
+			try {
+			if(	mineSet[x+1][y+1].getMine()){
 				count++;
-			if (mineSet[r-1][c+1].getMine())
-				count++;
-			if (mineSet[r][c+1].getMine())
-				count++;
-			if (mineSet[r+1][c].getMine())
-				count++;
-			if (mineSet[r+1][c+1].getMine())
-				count++;			
-		} else if (c == getCols()) {
-			if (mineSet[r-1][c-1].getMine())
-				count++;
-			if (mineSet[r-1][c].getMine())
-				count++;
-			if (mineSet[r][c-1].getMine())
-				count++;
-			if (mineSet[r+1][c-1].getMine())
-				count++;
-			if (mineSet[r+1][c].getMine())
-				count++;					
-		} else {
-			if (mineSet[r-1][c-1].getMine())
-				count++;
-			if (mineSet[r-1][c].getMine())
-				count++;
-			if (mineSet[r-1][c+1].getMine())
-				count++;
-			if (mineSet[r][c-1].getMine())
-				count++;
-			if (mineSet[r][c+1].getMine())
-				count++;					
-			if (mineSet[r+1][c-1].getMine())
-				count++;
-			if (mineSet[r+1][c].getMine())
-				count++;
-			if (mineSet[r+1][c+1].getMine())
-				count++;
+			}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("ummmm.....");
+			}
+			
+			
+			try {
+				if(mineSet[x+1][y].getMine()){
+					count++;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("ummmm.....");
+			}
+			
+			try {
+				if(mineSet[x][y+1].getMine()){
+					count++;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("ummmm.....");
+			}
+			
+			try {
+				if(mineSet[x-1][y-1].getMine()){
+					count++;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("ummmm.....");
+			}
+			
+			try {
+				if(mineSet[x-1][y].getMine()){
+					count++;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("ummmm.....");
+			}
+			
+			try {
+				if (mineSet[x][y-1].getMine()){
+					count++;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("ummmm.....");
+			}
+			
+			try {
+				if(mineSet[x+1][y-1].getMine()){
+					count++;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("ummmm.....");
+			}
+			
+			try {
+				if(mineSet[x][y-1].getMine()){
+					count++;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("ummmm.....");
+			}
+		}
 		}
 		return count;
 	}
+	
+	private void whiteSpaceFlipper(int r, int c){
+	
+		
+		
+	}
+	
 	
 	public void probeCell(String m, int r, int c) {
 		if (m == "y" && mineSet[r][c].getCellState() == " ? "){
