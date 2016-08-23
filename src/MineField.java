@@ -180,7 +180,7 @@ public class MineField {
 						System.out.print(i + "║" + mineSet[i][j].getCellState() + "║");
 				} else if (j == getCols() - 1) {
 					if (mineSet[i][j].getMine())
-						System.out.print("☺ ║\n");
+						System.out.print(" ☺ ║\n");
 					else
 						System.out.print(mineSet[i][j].getCellState() + "║\n");
 				} else if (mineSet[i][j].getMine())
