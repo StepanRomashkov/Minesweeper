@@ -28,9 +28,8 @@ public class MinesweeperApp {
 			row = scan.nextInt();
 			System.out.print("\nColumn: ");
 			col = scan.nextInt();
-			if (check.equals("y")) {
 			field.probeCell(check,row-1, col-1);	
-			}else field.probeCell(row-1, col-1);
+
 		} while (true);
 	}
 

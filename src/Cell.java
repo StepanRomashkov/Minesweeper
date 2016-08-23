@@ -3,10 +3,20 @@ public class Cell {
 	public static int count = 10;
 	private int cellState;
 	private boolean mine;
+	private boolean revealed;
 	
+	public boolean isRevealed() {
+		return revealed;
+	}
+
+	public void setRevealed(boolean revealed) {
+		this.revealed = revealed;
+	}
+
 	public Cell() {
 		cellState = -1;
 		mine = false;
+		revealed =false;
 	}
 	
 	public static void increaseCount() {
@@ -32,21 +42,14 @@ public class Cell {
 		case 0:
 			return "   ";
 		case 1:
-			return " 1 ";
 		case 2:
-			return " 2 ";
 		case 3:
-			return " 3 ";
 		case 4:
-			return " 4 ";
 		case 5:
-			return " 5 ";
 		case 6:
-			return " 6 ";
 		case 7:
-			return " 7 ";
 		case 8:
-			return " 8 ";
+			return (" "+cellState+" ");
 		case 9:
 			return " ? ";
 		}
