@@ -1,6 +1,6 @@
 
 public class Cell {
-	public static int count = 10;
+	public static int count = 5;
 	private int cellState;
 	private boolean mine;
 	private boolean revealed;
@@ -41,6 +41,11 @@ public class Cell {
 		return count;
 	}
 	
+	
+	public static void setCount(int count) {
+		Cell.count = count;
+	}
+
 	public void setCellState(int s) {
 		cellState = s;
 	}
