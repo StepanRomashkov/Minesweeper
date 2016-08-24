@@ -4,7 +4,16 @@ public class Cell {
 	private int cellState;
 	private boolean mine;
 	private boolean revealed;
+	private boolean marked;
 	
+	public boolean isMarked() {
+		return marked;
+	}
+
+	public void setMarked(boolean marked) {
+		this.marked = marked;
+	}
+
 	public boolean isRevealed() {
 		return revealed;
 	}
@@ -17,6 +26,7 @@ public class Cell {
 		cellState = -1;
 		mine = false;
 		revealed =false;
+		marked = false;
 	}
 	
 	public static void increaseCount() {

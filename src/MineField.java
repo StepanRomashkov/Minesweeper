@@ -4,6 +4,7 @@ public class MineField {
 	private int rows;
 	private int cols;
 	private Cell[][] mineSet;
+	boolean inProgress = true;
 
 	public MineField() {
 		rows = 8;
@@ -44,29 +45,56 @@ public class MineField {
 	}
 
 	public void displayBoard() {
-		System.out.println("   1   2   3   4   5   6   7   8 ");
-		System.out.println(" ╔═══╦═══╦═══╦═══╦═══╦═══╦═══╦═══╗");
+		for(int i = 1; i<=cols;i++)
+			System.out.printf("   " + i);
+			System.out.printf("\n ╔");
+			for(int o = 0;o<mineSet.length-1;o++){
+			System.out.printf("═══╦");
+			}
+			System.out.println("═══╗");
 		for (int i = 0; i < getRows(); i++) {
 			for (int j = 0; j < getCols(); j++) {
 				if (j == 0) {
 					if(mineSet[i][j].isRevealed()){
 					System.out.print((i + 1) + "║" + mineSet[i][j].getCellState() + "║");
-					}else{
+					}else if (mineSet[i][j].isMarked()){
+						System.out.print((i + 1) + "║" + " ? " + "║");
+					}else {
 						System.out.print((i + 1) + "║" + " ☻ " + "║");
+
 					}
 				} else if (j == getCols() - 1) {
 					if(mineSet[i][j].isRevealed()){
 					System.out.print(mineSet[i][j].getCellState() + "║\n");
+					}else if (mineSet[i][j].isMarked()){
+						System.out.print(" ? " + "║\n");
 					}else System.out.print(" ☻ " + "║\n");
 				} else if(mineSet[i][j].isRevealed()){
 					System.out.print(mineSet[i][j].getCellState() + "║");
-					}else System.out.print(" ☻ " + "║");
+					}else if (mineSet[i][j].isMarked()){
+						System.out.print(" ? " + "║");
+					}else {System.out.print(" ☻ " + "║");
+					
+					}
 					
 			}
-			if (i == getRows() - 1)
-				System.out.println(" ╚═══╩═══╩═══╩═══╩═══╩═══╩═══╩═══╝");
-			else
-				System.out.println(" ╠═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╣");
+			if (i == getRows() - 1){
+				System.out.printf(" ╚");
+			
+			for(int o = 0;o<mineSet.length-1;o++){
+			System.out.printf("═══╩");
+				}
+			System.out.println("═══╝");
+			}
+			else{
+				System.out.printf(" ╠");
+				
+				for(int o = 0;o<mineSet.length-1;o++){
+				System.out.printf("═══╬");
+					}
+				System.out.println("═══╣");
+			}
+				
 		}
 	}
 
@@ -132,7 +160,7 @@ public class MineField {
 				}
 
 				try {
-					if (mineSet[x][y - 1].getMine()) {
+					if (mineSet[x-1][y + 1].getMine()) {
 						count++;
 					}
 				} catch (Exception e) {
@@ -150,23 +178,34 @@ public class MineField {
 	}
 
 	public void probeCell(String m, int r, int c) {
-		if (m == "y" && mineSet[r][c].getCellState().equals(" ? ")) {
-			mineSet[r][c].setCellState(-1);
-		} else if (mineSet[r][c].getCellState().equals(" ☻ ")) {
-			mineSet[r][c].setCellState(9);
-		}
-		mineSet[r][c].setRevealed(true);
-		if (mineSet[r][c].getMine()) {
+		if (m.equals("y") && mineSet[r][c].isMarked()) {
+			mineSet[r][c].setRevealed(false);
+			mineSet[r][c].setMarked(false);
+			displayBoard();
+		} else if (m.equals("y") && mineSet[r][c].getCellState().equals(" ☻ ")) {
+			mineSet[r][c].setMarked(true);
+			displayBoard();
+		} else if(m.equals("y") && mineSet[r][c].isRevealed() == true){
+			System.out.println("that cell is already revealed, please make another selection");
+		} else if(!m.equals("y") && mineSet[r][c].isMarked()){
+			System.out.println("that place is already marked, so you cannot select it. please unmark it to select");
+		}else if (mineSet[r][c].getMine()) {
 			displayBoom();
-		} else {
+		}else {
+			mineSet[r][c].setRevealed(true);
 			displayBoard();
 		}
 		
 		
 	}
 	public void displayBoom() {
-		System.out.println("   1   2   3   4   5   6   7   8 ");
-		System.out.println(" ╔═══╦═══╦═══╦═══╦═══╦═══╦═══╦═══╗");
+		for(int i = 1; i<=cols;i++)
+		System.out.printf("   " + i);
+		System.out.printf("\n ╔");
+		for(int o = 0;o<mineSet.length-1;o++){
+		System.out.printf("═══╦");
+		}
+		System.out.println("═══╗");
 		for (int i = 0; i < getRows(); i++) {
 			for (int j = 0; j < getCols(); j++) {
 				if (j == 0) {
@@ -185,11 +224,24 @@ public class MineField {
 					System.out.print(mineSet[i][j].getCellState() + "║");
 			}
 			if (i == getRows() - 1) {
-				System.out.println(" ╚═══╩═══╩═══╩═══╩═══╩═══╩═══╩═══╝");
+				System.out.printf(" ╚");
+				
+				for(int o = 0;o<mineSet.length-1;o++){
+				System.out.printf("═══╩");
+					}
+				System.out.println("═══╝");
+				
 				System.out.println(" You hit a mine! You have lost!");
-			} else
-				System.out.println(" ╠═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╣");
-		}
-	}
+				
+			} else{
+				System.out.printf(" ╠");
+			
+				for(int o = 0;o<mineSet.length-1;o++){
+				System.out.printf("═══╬");
+					}
+				System.out.println("═══╣");
+				}
+		inProgress = false;
+	}}
 
-}
+	}

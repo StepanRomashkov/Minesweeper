@@ -4,9 +4,11 @@ public class MinesweeperApp {
 	public static Scanner scan;
 
 	public static void main(String[] args) {
+		
 		scan = new Scanner(System.in);
 		MineField field = new MineField();
 		int row, col;
+
 
 		System.out.println("board:");
 		for (int i = 0; i < field.getRows(); i++) {
@@ -29,8 +31,14 @@ public class MinesweeperApp {
 			System.out.print("\nColumn: ");
 			col = scan.nextInt();
 			field.probeCell(check,row-1, col-1);	
-
-		} while (true);
-	}
+			scan.nextLine();
+		} while (field.inProgress);
+		System.out.println("do you want to play again?");
+		scan.nextLine();
+		}
+	
+	
+	
+	
 
 }
