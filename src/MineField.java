@@ -5,6 +5,25 @@ public class MineField {
 	boolean inProgress = true;
 	private int totalNumOfMines;
 
+	public MineField(int row, int col, int mines) {
+			rows = row;
+			cols = col;
+			totalNumOfMines = mines;
+		mineSet = new Cell[rows][cols];
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				mineSet[i][j] = new Cell();
+			}
+		}
+		Cell.count = totalNumOfMines;
+		while (Cell.getCount() > 0) {
+			int randRow = (int) (Math.random() * rows);
+			int randCol = (int) (Math.random() * cols);
+			if (!mineSet[randRow][randCol].getMine())
+				mineSet[randRow][randCol].setMine();
+		}
+		assignCells();
+	}
 	public MineField(String difficulty) {
 		if (difficulty.equalsIgnoreCase("b")) {
 			rows = 9;
@@ -36,7 +55,6 @@ public class MineField {
 		}
 		assignCells();
 	}
-
 	public void setRows(int r) {
 		rows = r;
 	}
@@ -75,16 +93,17 @@ public class MineField {
 
 	public void displayBoard() {
 		System.out.print("        ");
-		for (int i = 1; i <= cols; i++)
+		for (int i = 1; i <= cols; i++){
 			System.out.printf("%4d", i);
+		}
 		System.out.printf("\n \t ╔");
 
-		for (int o = 0; o < mineSet.length - 1; o++) {
+		for (int o = 0; o < cols - 1; o++) {
 			System.out.printf("═══╦");
 		}
 		System.out.println("═══╗");
-		for (int i = 0; i < getRows(); i++) {
-			for (int j = 0; j < getCols(); j++) {
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
 				if (j == 0) {
 					if (mineSet[i][j].isRevealed()) {
 						System.out.printf("%9d" + "║" + mineSet[i][j].getCellState() + "║", (i + 1));
@@ -114,14 +133,14 @@ public class MineField {
 			if (i == getRows() - 1) {
 				System.out.printf(" \t ╚");
 
-				for (int o = 0; o < mineSet.length - 1; o++) {
+				for (int o = 0; o < cols - 1; o++) {
 					System.out.printf("═══╩");
 				}
 				System.out.println("═══╝");
 			} else {
 				System.out.printf(" \t ╠");
 
-				for (int o = 0; o < mineSet.length - 1; o++) {
+				for (int o = 0; o < cols - 1; o++) {
 					System.out.printf("═══╬");
 				}
 				System.out.println("═══╣");
@@ -159,6 +178,9 @@ public class MineField {
 	}
 
 	private void whiteSpaceFlipper(int r, int c) {
+		if (!mineSet[r][c].equals("   ")){
+			return;
+		}
 		for (int i = r - 1; i <= r + 1; i++) {
 			for (int j = c - 1; j <= c + 1; j++) {
 				if (i < 0 || j < 0) {

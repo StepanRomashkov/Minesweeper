@@ -6,15 +6,28 @@ public class MinesweeperApp {
 	public static void main(String[] args) {
 		int row, col;
 		scan = new Scanner(System.in);
-		
+		MineField minefield;
 		do {
 			System.out.println("Please select a difficulty: ");
 			System.out.println("B: Beginner");
 			System.out.println("I: Intermediate");
 			System.out.println("E: Expert");
 			System.out.println("C: Custom");
-			MineField minefield = new MineField(Validator.isValidDifficulty(scan));
-			minefield.getRows();
+			String difficulty = Validator.isValidDifficulty(scan);
+			if (difficulty.equals("c")){
+				System.out.println("please the number of rows you would like");
+				int numOfRows = Validator.isPositiveNumber(scan);
+				System.out.println("please the number of columns you would like");				
+				int numOfColumn = Validator.isPositiveNumber(scan);
+				System.out.println("please the number of mines you would like");				
+				int numOfMines = Validator.isPositiveNumber(scan);
+				scan.nextLine();
+				minefield = new MineField(numOfRows,numOfColumn,numOfMines);				
+				
+			}else {
+				minefield = new MineField(Validator.isValidDifficulty(scan));
+			}
+			
 				minefield.displayBoard();
 				do {
 					System.out.println("do you want to flag/unflag a cell? y/n");
