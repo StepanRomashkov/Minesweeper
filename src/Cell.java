@@ -1,7 +1,7 @@
 
 public class Cell {
 	public static int count = 10;
-	private int cellState;
+	protected int cellState;
 	private boolean mine;
 	private boolean revealed;
 	private boolean marked;
@@ -29,8 +29,8 @@ public class Cell {
 		marked = false;
 	}
 	
-	public static void increaseCount() {
-		count++;
+	public static void setCount(int c) {
+		count = c;
 	}
 	
 	public static void decreaseCount() {
@@ -60,6 +60,8 @@ public class Cell {
 		case 7:
 		case 8:
 			return (" "+cellState+" ");
+		case 9:
+			return " ? ";
 		}
 		return " X ";
 	}
