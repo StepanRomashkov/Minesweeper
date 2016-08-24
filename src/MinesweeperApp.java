@@ -4,58 +4,32 @@ public class MinesweeperApp {
 	public static Scanner scan;
 
 	public static void main(String[] args) {
-		
+		int row, col;
 		scan = new Scanner(System.in);
 		
 		do {
 			System.out.println("Please select a difficulty: ");
-			System.out.println("A: Beginner");
-			System.out.println("B: Intermediate");
-			System.out.println("C: Expert");
-			MineField begin = new MineField();
-			Intermediate inter = new Intermediate();
-			Expert expert = new Expert();
-			int row, col;
-			String choice = scan.nextLine();
-			if (choice.equalsIgnoreCase("a")) {
-				begin.displayBoard();
+			System.out.println("B: Beginner");
+			System.out.println("I: Intermediate");
+			System.out.println("E: Expert");
+			System.out.println("C: Custom");
+			MineField minefield = new MineField(Validator.isValidDifficulty(scan));
+			minefield.getRows();
+				minefield.displayBoard();
 				do {
-					System.out.println("do you want to mark?");
-					String check = scan.nextLine();
+					System.out.println("do you want to flag/unflag a cell? y/n");
+					String check = Validator.isValidContinue(scan);
 					System.out.print("Row: ");
-					row = scan.nextInt();
-					System.out.print("\nColumn: ");
-					col = scan.nextInt();
-					begin.probeCell(check, row - 1, col - 1);
+					row = Validator.isRowNumber(scan, minefield.getRows());
+					System.out.print("\nColumn: \n");
+					col = Validator.isRowNumber(scan, minefield.getRows());
+					minefield.probeCell(check, row - 1, col - 1);
 					scan.nextLine();
-				} while (begin.inProgress);
-			} else if (choice.equalsIgnoreCase("b")) {
-				inter.displayBoard();
-				do {
-					System.out.println("do you want to mark?");
-					String check = scan.nextLine();
-					System.out.print("Row: ");
-					row = scan.nextInt();
-					System.out.print("\nColumn: ");
-					col = scan.nextInt();
-					inter.probeCell(check, row - 1, col - 1);
-					scan.nextLine();
-				} while (inter.inProgress);
-			} else if (choice.equalsIgnoreCase("c")) {
-				expert.displayBoard();
-				do {
-					System.out.println("do you want to mark?");
-					String check = scan.nextLine();
-					System.out.print("Row: ");
-					row = scan.nextInt();
-					System.out.print("\nColumn: ");
-					col = scan.nextInt();
-					expert.probeCell(check, row - 1, col - 1);
-					scan.nextLine();
-				} while (expert.inProgress);
-			}
+				} while (minefield.inProgress);
+			
+			
 			System.out.println("Would you want to play again? (y/n)");
-		} while (scan.nextLine().equalsIgnoreCase("y"));
+		} while (Validator.isValidContinue(scan).equals("y"));
 		
 		}
 	

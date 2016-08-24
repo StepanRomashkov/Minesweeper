@@ -1,6 +1,6 @@
 
 public class Cell {
-	public static int count = 5;
+	public static int count;
 	private int cellState;
 	private boolean mine;
 	private boolean revealed;
