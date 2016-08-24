@@ -35,6 +35,7 @@ public class MinesweeperApp {
 		} while (field.inProgress);
 		System.out.println("do you want to play again?");
 		scan.nextLine();
+		
 		}
 	
 	

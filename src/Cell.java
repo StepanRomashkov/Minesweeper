@@ -60,8 +60,6 @@ public class Cell {
 		case 7:
 		case 8:
 			return (" "+cellState+" ");
-		case 9:
-			return " ? ";
 		}
 		return " X ";
 	}
