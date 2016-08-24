@@ -5,10 +5,11 @@ public class MineField {
 	private int cols;
 	private Cell[][] mineSet;
 	boolean inProgress = true;
+	private int totalNumOfMines = Cell.count;
 
 	public MineField() {
-		rows = 8;
-		cols = 8;
+		rows = 9;
+		cols = 9;
 		mineSet = new Cell[rows][cols];
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
@@ -43,7 +44,21 @@ public class MineField {
 	public Cell getCell(int r, int c) {
 		return mineSet[r][c];
 	}
+	public void isWin(){
+		int numOfRevealed= 0;
+		for (int x = 0; x < mineSet.length; x++) {
+			for (int y = 0; y < mineSet.length; y++) {
+				if (mineSet[x][y].isRevealed()) {
+					numOfRevealed++;
+				}
+			}
+		}
+		if (numOfRevealed >= ((rows * cols) - totalNumOfMines)) {
+			inProgress = false;
+			displayWin();
 
+		}
+	}
 	public void displayBoard() {
 		for (int i = 1; i <= cols; i++)
 			System.out.printf("   " + i);
@@ -175,105 +190,28 @@ public class MineField {
 	}
 
 	private void whiteSpaceFlipper(int r, int c) {
-		
-		try {
-			if (!mineSet[r + 1][c + 1].getMine() && !mineSet[r + 1][c + 1].isMarked()&& !mineSet[r + 1][c+1].isRevealed()  && mineSet[r][c].getCellState().equals("   ")) {
-					mineSet[r + 1][c + 1].setRevealed(true);
-				if(mineSet[r + 1][c + 1].getCellState().equals("   ")){
-				
-					whiteSpaceFlipper((r+1), (c + 1));
-				}
-			}
-		} catch (Exception e) {
-
-		}
-
-		try {
-			if (!mineSet[r + 1][c].getMine() && !mineSet[r + 1][c].isMarked() && !mineSet[r + 1][c].isRevealed()) {
-				mineSet[r + 1][c].setRevealed(true);
-				if(mineSet[r + 1][c].getCellState().equals("   ")){
-					whiteSpaceFlipper((r + 1), c);
-				}
-			}
-		} catch (Exception e) {
-
-		}
-
-		try {
-			if (!mineSet[r][c + 1].getMine() && !mineSet[r][c + 1].isMarked()&& !mineSet[r][c+1].isRevealed()) {
-				mineSet[r][c+1].setRevealed(true);
-				if(mineSet[r][c+1].getCellState().equals("   ")){
-					whiteSpaceFlipper((r), c+1);
-				}
-			}
-		} catch (Exception e) {
-
-		}
-
-		try {
-			if (!mineSet[r - 1][c - 1].getMine() && !mineSet[r - 1][c - 1].isMarked()&& !mineSet[r - 1][c-1].isRevealed()  && mineSet[r][c].getCellState().equals("   ")) {
-				mineSet[r - 1][c - 1].setRevealed(true);
-				if(mineSet[r - 1][c - 1].getCellState().equals("   ")){
-					
-					whiteSpaceFlipper((r-1), (c - 1));
-				}
-			}
-		} catch (Exception e) {
-
-		}
-
-		try {
-			if (!mineSet[r - 1][c].getMine() && !mineSet[r - 1][c].isMarked()&& !mineSet[r - 1][c].isRevealed()) {
-				mineSet[r - 1][c].setRevealed(true);
-				if(mineSet[r - 1][c].getCellState().equals("   ")){
-					whiteSpaceFlipper((r - 1), c);
-				}
-			}
-		} catch (Exception e) {
-		}
-
-		try {
-			if (!mineSet[r][c - 1].getMine() && !mineSet[r][c - 1].isMarked() && !mineSet[r][c-1].isRevealed()) {
-				mineSet[r][c - 1].setRevealed(true);
-				if(mineSet[r][c-1].getCellState().equals("   ")){
-					whiteSpaceFlipper(r, (c - 1));
-				}
-			}
-		} catch (Exception e) {
-		}
-
-		try {
-			if (!mineSet[r + 1][c - 1].getMine() && !mineSet[r + 1][c + 1].isMarked()&& !mineSet[r + 1][c+1].isRevealed() && mineSet[r][c].getCellState().equals("   ")) {
-				mineSet[r + 1][c - 1].setRevealed(true);
-				if(mineSet[r + 1][c - 1].getCellState().equals("   ")){	
-					whiteSpaceFlipper((r+1), (c - 1));
-				}
-			}
-		} catch (Exception e) {
-		}
-
-		try {
-			if (!mineSet[r - 1][c + 1].getMine() && !mineSet[r - 1][c + 1].isMarked()&& !mineSet[r - 1][c+1].isRevealed() && mineSet[r][c].getCellState().equals("   ")) {
-				mineSet[r - 1][c + 1].setRevealed(true);
-				if(mineSet[r - 1][c + 1].getCellState().equals("   ")){
-					
-					whiteSpaceFlipper((r-1), (c + 1));
-				}
-			}
-		} catch (Exception e) {
-		}
+		for (int i = r - 1; i <= r + 1; i++) {
+            for (int j = c - 1; j <= c + 1; j++) {
+                try {
+                    if (!mineSet[i][j].isRevealed() && !mineSet[i][j].isMarked() && !mineSet[i][j].getMine()) {
+                        mineSet[i][j].setRevealed(true);
+                        if (mineSet[i][j].getCellState() == "   ")
+                            whiteSpaceFlipper(i, j);
+                    }
+                } catch (Exception e) {}
+            }
+        }
 	}
 
 	public void probeCell(String m, int r, int c) {
-		int numOfRevealed = 0;
 		if (m.equals("y") && mineSet[r][c].isMarked()) {
 			mineSet[r][c].setRevealed(false);
 			mineSet[r][c].setMarked(false);
 			displayBoard();
-		} else if (m.equals("y") && mineSet[r][c].getCellState().equals(" ☻ ")) {
+		} else if (m.equals("y") && !mineSet[r][c].isRevealed()) {
 			mineSet[r][c].setMarked(true);
 			displayBoard();
-		} else if (m.equals("y") && mineSet[r][c].isRevealed() == true) {
+		} else if (m.equals("y") && mineSet[r][c].isRevealed()) {
 			System.out.println("that cell is already revealed, please make another selection");
 		} else if (!m.equals("y") && mineSet[r][c].isMarked()) {
 			System.out.println("that place is already marked, so you cannot select it. please unmark it to select");
@@ -282,21 +220,12 @@ public class MineField {
 		} else {
 			mineSet[r][c].setRevealed(true);
 			whiteSpaceFlipper(r, c);
-			displayBoard();
+			isWin();
+			if(inProgress)
+				displayBoard();
 		}
 
-		for (int x = 0; x < mineSet.length; x++) {
-			for (int y = 0; y < mineSet.length; y++) {
-				if (mineSet[x][y].isRevealed()) {
-					numOfRevealed++;
-				}
-			}
-		}
-		if (numOfRevealed == (rows * cols - Cell.getCount())) {
-			inProgress = false;
-			displayWin();
-
-		}
+	
 
 	}
 
