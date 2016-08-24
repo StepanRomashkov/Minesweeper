@@ -6,18 +6,20 @@ public class MineField {
 	private int totalNumOfMines;
 
 	public MineField(String difficulty) {
-		if (difficulty.equalsIgnoreCase("a")) {
+		if (difficulty.equalsIgnoreCase("b")) {
 			rows = 9;
 			cols = 9;
 			totalNumOfMines = 10;
-		} else if (difficulty.equalsIgnoreCase("b")) {
+		} else if (difficulty.equalsIgnoreCase("i")) {
 			rows = 16;
 			cols = 16;
 			totalNumOfMines = 40;
-		} else if (difficulty.equalsIgnoreCase("c")) {
-			rows = 24;
-			cols = 24;
+		} else if (difficulty.equalsIgnoreCase("e")) {
+			rows = 16;
+			cols = 30;
 			totalNumOfMines = 99;
+		} else if (difficulty.equalsIgnoreCase("c")){
+			
 		}
 		mineSet = new Cell[rows][cols];
 		for (int i = 0; i < rows; i++) {
@@ -25,6 +27,7 @@ public class MineField {
 				mineSet[i][j] = new Cell();
 			}
 		}
+		Cell.count = totalNumOfMines;
 		while (Cell.getCount() > 0) {
 			int randRow = (int) (Math.random() * rows);
 			int randCol = (int) (Math.random() * cols);
@@ -32,7 +35,6 @@ public class MineField {
 				mineSet[randRow][randCol].setMine();
 		}
 		assignCells();
-		Cell.count = totalNumOfMines;
 	}
 
 	public void setRows(int r) {
@@ -167,8 +169,9 @@ public class MineField {
 				if (!mineSet[i][j].isRevealed() && !mineSet[i][j].isMarked() && !mineSet[i][j].getMine()) {
 					
 					mineSet[i][j].setRevealed(true);
-					if (mineSet[i][j].getCellState() == "   ")
+					if (mineSet[i][j].getCellState().equals("   ")){
 						whiteSpaceFlipper(i, j);
+					}
 				}
 			}
 		}

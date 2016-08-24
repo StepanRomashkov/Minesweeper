@@ -40,17 +40,17 @@ public class Validator {
 	}
 
 	public static int isRowNumber(Scanner scan, int rows) {
-		int number = 0;
+		int number=0;
 		boolean valid = true;
 		while (valid) {
 		try {
 		number = scan.nextInt();
 		if (number < 1 || number > rows) {
 			System.out.println("Not a valid number. Please re-enter a number: ");
-			continue;
-		} else break;
+		} else valid=false;
 		} catch (InputMismatchException e) {
 			System.out.println("Not a number. Please try again: ");
+			scan.nextLine();
 		}
 		
 	}
@@ -60,6 +60,7 @@ public class Validator {
 	
 	
 	public static int isPositiveNumber(Scanner scan) {
+		
 		int number = 0;
 		boolean valid = true;
 		while (valid) {
@@ -71,6 +72,7 @@ public class Validator {
 		} else break;
 		} catch (InputMismatchException e) {
 			System.out.println("Not a number. Please try again: ");
+			scan.nextLine();
 		}
 		
 	}
