@@ -26,7 +26,7 @@ public class MinesweeperApp {
 				minefield = new MineField(numOfRows,numOfColumn,numOfMines);				
 				
 			}else {
-				minefield = new MineField(Validator.isValidDifficulty(scan));
+				minefield = new MineField(difficulty);
 			}
 			
 				minefield.displayBoard();
