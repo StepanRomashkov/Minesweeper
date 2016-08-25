@@ -29,10 +29,6 @@ public class Cell {
 		marked = false;
 	}
 	
-	public static void increaseCount() {
-		count++;
-	}
-	
 	public static void decreaseCount() {
 		count--;
 	}

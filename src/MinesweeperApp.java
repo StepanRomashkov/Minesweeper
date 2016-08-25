@@ -14,13 +14,14 @@ public class MinesweeperApp {
 			System.out.println("E: Expert");
 			System.out.println("C: Custom");
 			String difficulty = Validator.isValidDifficulty(scan);
+			
 			if (difficulty.equals("c")){
-				System.out.println("please the number of rows you would like");
+				System.out.println("please the number of rows you would like(minimum of 2)");
 				int numOfRows = Validator.isPositiveNumber(scan);
-				System.out.println("please the number of columns you would like");				
+				System.out.println("please the number of columns you would like(minimum of 2)");				
 				int numOfColumn = Validator.isPositiveNumber(scan);
 				System.out.println("please the number of mines you would like");				
-				int numOfMines = Validator.isPositiveNumber(scan);
+				int numOfMines = Validator.isAMineNumber(scan , numOfColumn, numOfRows);
 				scan.nextLine();
 				minefield = new MineField(numOfRows,numOfColumn,numOfMines);				
 				
@@ -29,13 +30,14 @@ public class MinesweeperApp {
 			}
 			
 				minefield.displayBoard();
+				//main game loop that checks for user input to mark or show cells
 				do {
 					System.out.println("do you want to flag/unflag a cell? y/n");
 					String check = Validator.isValidContinue(scan);
 					System.out.print("Row: ");
 					row = Validator.isRowNumber(scan, minefield.getRows());
 					System.out.print("\nColumn: \n");
-					col = Validator.isRowNumber(scan, minefield.getRows());
+					col = Validator.isColumnNumber(scan, minefield.getCols());
 					minefield.probeCell(check, row - 1, col - 1);
 					scan.nextLine();
 				} while (minefield.inProgress);
