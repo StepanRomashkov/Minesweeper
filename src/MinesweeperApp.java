@@ -32,11 +32,11 @@ public class MinesweeperApp {
 				minefield.displayBoard();
 				//main game loop that checks for user input to mark or show cells
 				do {
-					System.out.println("do you want to flag/unflag a cell? y/n");
+					System.out.print("do you want to flag/unflag a cell? y/n ");
 					String check = Validator.isValidContinue(scan);
 					System.out.print("Row: ");
 					row = Validator.isRowNumber(scan, minefield.getRows());
-					System.out.print("\nColumn: \n");
+					System.out.print("\nColumn: ");
 					col = Validator.isColumnNumber(scan, minefield.getCols());
 					minefield.probeCell(check, row - 1, col - 1);
 					scan.nextLine();
